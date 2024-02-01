@@ -149,7 +149,7 @@ public class Main {
         // Return list of id
         List<Person> personCollectIdList = new Person().populatePerson();
         List<String> collectId = personCollectIdList.stream()
-                .filter(person -> person.getNationality().equals("Brasil"))
+                .filter(person -> person.getNationality().equals("Brazil"))
                 .map(person -> person.getId())
                 .collect(Collectors.toList());
         System.out.println("Person ID - Collect: " + collectId);
@@ -227,6 +227,218 @@ public class Main {
                 .filter(person -> person.getNationality().equals("Brazil"))
                 .findAny();
         System.out.println("Person - FindAny: " + (findAny.isPresent() ? findAny.get().toString() : ""));
+
+        List<String> list = List.of("Emy", "Arara", "Ovo", "Casa", "Arara", "Fone");
+        list.stream()
+                .filter(value -> {
+                    StringBuilder stringBuilder = new StringBuilder(value).reverse();
+
+                    return value.compareToIgnoreCase(stringBuilder.toString()) == 0;
+                })
+                .forEach(System.out::println);
+
+        // Live code test
+
+        // Find duplicate characters in a string in
+        System.out.println("---------------------------");
+        String caracter = "ARARAIOPAP";
+
+        List<String> list1 = Arrays.stream(caracter.split(""))
+                .collect(Collectors.toList());
+
+        Collections.sort(list1);
+        List<String> stringList = new ArrayList<>();
+
+        for (int x = list1.size() - 1; x > 0; x--) {
+            if (list1.get(x).compareToIgnoreCase(list1.get(x - 1)) == 0) {
+                if (!stringList.contains(list1.get(x))) {
+                    stringList.add(list1.get(x));
+                }
+            }
+        }
+
+        System.out.println("list1: " + list1);
+
+        System.out.println("stringList: " + stringList);
+
+        // Remove duplicate elements from ArrayList
+        System.out.println("---------------------------");
+        list.stream()
+                .distinct()
+                .forEach(System.out::println);
+
+        System.out.println("---------------------------");
+        List<String> listDuplicate = new ArrayList<>();
+        listDuplicate.add("Emy");
+        listDuplicate.add("Arara");
+        listDuplicate.add("Ovo");
+        listDuplicate.add("Casa");
+        listDuplicate.add("Ovo");
+        listDuplicate.add("Fone");
+        listDuplicate.add("Fone");
+        listDuplicate.add("Arara");
+        listDuplicate.add("Ovo");
+        listDuplicate.add("Fone");
+        listDuplicate.add("Emy");
+
+        Collections.sort(listDuplicate);
+
+        System.out.println("List: "+ listDuplicate);
+        for (int x = listDuplicate.size() - 1; x > 0; x--) {
+            if (listDuplicate.get(x).compareToIgnoreCase(listDuplicate.get(x - 1)) == 0) {
+                listDuplicate.remove(x);
+            }
+        }
+        System.out.println("List: "+ listDuplicate);
+        System.out.println("---------------------------");
+
+        String string = "Vinicius";
+
+        StringBuilder stringBuilder = new StringBuilder(string.toUpperCase()).reverse();
+
+        System.out.println("String: " + string);
+        System.out.println("String Reverse: " + stringBuilder);
+
+
+        // Data structure
+
+        // List
+        System.out.println("---------------------------");
+        List<Integer> integers = new ArrayList<>();
+        integers.add(0);
+        integers.add(5);
+        integers.add(10);
+        integers.add(7);
+        integers.stream()
+                .filter((value) -> value % 2 == 0)
+                .forEach(System.out::println);
+
+        System.out.println("integers.hashCode(): " + integers.hashCode());
+        System.out.println("integers.stream().iterator(): " + integers.stream().iterator());
+
+        // Queue - FIFO
+        System.out.println("---------------------------");
+        // LinkedList - FIFO
+        // LinkedList the add method will insert in the end
+        // LinkedList will remove from the init
+        // List is not a FIFO because to remove we need to use the index
+        LinkedList<Person> people = new LinkedList<>();
+        people.add(new Person("1", "Test", "Brasil", 10));
+        people.add(new Person("2", "Test 1", "Brasil", 10));
+        people.add(new Person("3", "Test 2", "Brasil", 10));
+        people.stream()
+                .forEach(System.out::println);
+        people.remove();
+        System.out.println("After remove");
+        people.stream()
+                .forEach(System.out::println);
+
+        // Stack - LIFO
+        System.out.println("---------------------------");
+        Stack<Person> personStack = new Stack<>();
+        personStack.push(new Person("1", "Test", "Brasil", 10));
+        personStack.push(new Person("2", "Test 1", "Brasil", 10));
+        personStack.push(new Person("3", "Test 2", "Brasil", 10));
+
+        System.out.println("Stack: "+ personStack);
+        System.out.println("Pop Stack: " + personStack.pop());
+
+
+        // HasMap
+        System.out.println("---------------------------");
+        // HashMap
+        // O(1) to access, insert and remove
+        // Allow duplicate and does not maintain the order of the elements
+        HashMap<Integer, Person> hashMap = new HashMap<>();
+        hashMap.put(1, new Person("1", "Test", "Brasil", 10));
+        hashMap.put(2, new Person("2", "Test 1", "Brasil", 10));
+        System.out.println("HashMap contains key: " + hashMap.containsKey(2));
+
+        hashMap.entrySet().forEach(System.out::println);
+        hashMap.entrySet().stream().forEach(value -> {
+            System.out.println("****");
+            System.out.println("Name: " + value.getValue().getName());
+            System.out.println("Id: " + value.getValue().getId());
+        });
+
+        // Find out if an expression has balanced parenthesis.
+        System.out.println("---------------------------");
+
+        // ((
+        // ()
+        // ((()()))
+
+        String parenthesis = "()";
+        List<String> parenthesisList = Arrays.asList(parenthesis.split(""));
+        System.out.println(parenthesisList);
+        int count = 0;
+        for (int x = 0; x < parenthesisList.size(); x++ ) {
+            if (parenthesisList.get(x).equals("(")) {
+                count++;
+            } else if (parenthesisList.get(x).equals(")")) {
+                count--;
+            }
+        }
+
+        if (count == 0) {
+            System.out.println("It is a balanced parenthesis");
+        } else {
+            System.out.println("It is not a balanced parenthesis");
+        }
+
+        Collections.sort(parenthesisList);
+
+        if (parenthesisList.size() % 2 == 0) {
+            int middle = Math.abs(parenthesisList.size()/2);
+            System.out.println("middle: " + middle);
+            if (parenthesisList.get(middle - 1).equals("(") && parenthesisList.get(middle).equals(")")) {
+                System.out.println("It is a balanced parenthesis");
+            }
+        } else {
+            System.out.println("It is not a balanced parenthesis");
+        }
+
+//        System.out.println(parenthesisList);
+
+        long open = parenthesisList.stream()
+                .filter(value -> value.equals("("))
+                .count();
+
+        long close = parenthesisList.stream()
+                .filter(value -> value.equals(")"))
+                .count();
+
+        if (open == close) {
+            System.out.println("It is a balanced parenthesis");
+        } else {
+            System.out.println("It is not a balanced parenthesis");
+        }
+
+        System.out.println("---------------------------");
+
+        // Creating a list of Prime Numbers
+        List<Integer> PrimeNumbers = Arrays.asList(5, 7, 11,13);
+
+        // Creating a list of Odd Numbers
+        List<Integer> OddNumbers = Arrays.asList(1, 3, 5);
+
+        // Creating a list of Even Numbers
+        List<Integer> EvenNumbers = Arrays.asList(2, 4, 6, 8);
+
+        List<List<Integer>> listOfListofInts =
+                Arrays.asList(PrimeNumbers, OddNumbers, EvenNumbers);
+
+        System.out.println("The Structure before flattening is : " +
+                listOfListofInts);
+
+        // Using flatMap for transformating and flattening.
+        List<Integer> listofInts  = listOfListofInts.stream()
+                .flatMap(value -> value.stream())
+                .collect(Collectors.toList());
+
+        System.out.println("The Structure after flattening is : " +
+                listofInts);
+
 
     }
 }
